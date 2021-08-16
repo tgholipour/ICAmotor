@@ -6,7 +6,7 @@ This pipeline is meant to extract the dimension of resting state fMRI data repre
 2) Component Selection - Select the ICA component best matching the provided template using DICI comparison.
 3) Component Validation - Calculating hit rate and DICI of top component and first level activation maps of task fMRI data, meant to elicit the same functional network.
 
-#Installation
+# Installation
 Download and unzip repository. The pipeline can be run in parts, or can be run all together from the ICA_template_pipeline script. Default values have been provided, and can be changed to fit the environment in which it is being run. 
 
 SPM and FSL are required before running this pipeline and can be installed for free at the links below.
