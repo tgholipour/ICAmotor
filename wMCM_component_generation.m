@@ -1,4 +1,4 @@
-function component_generation_wMCM(fslpath, fmriprepdir, numcomps, smoothkernel)
+function wMCM_component_generation(fslpath, fmriprepdir, numcomps, smoothkernel)
 cd(fmriprepdir)
 inputsubs=dir(fmriprepdir);
 subs = {inputsubs.name};
