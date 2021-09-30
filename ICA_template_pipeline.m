@@ -7,7 +7,7 @@ if(nargin==0)
     afnipath='';
     antspath = '';
     smoothkernel = 2.49;
-    mMCM_maskpath = '';
+    mMCM_maskpath = 'Templates/mMCM_mask.nii';
     fmriprepdir='Data/';
     comp_sel_thresholds = [1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 1.96];
     numcomps = {'auto', '20', '30', '40', '50', '60'};
