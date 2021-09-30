@@ -1,4 +1,4 @@
-function wMCM_validation(fmriprepdir, thresholds, activation_thresh, templatepath, taskname, firstlevdir)
+function wMCM_task_validation(fmriprepdir, thresholds, activation_thresh, templatepath, taskname, firstlevdir)
 clear;
 addpath('/nas/data/app/spm12');
 tic;
