@@ -1,6 +1,6 @@
 # ICA motor
 
-This pipeline is meant to extract the dimension of resting state fMRI data representative of a functional network, given a template representing said network through independent component analysis. (ICA). The user has the option to run through this pipeline using a whole-brain ICA method to generate the wMCM (whole-brain MotorComponentMap), a masked-ICA method to generate the mMCM (masked Motor Component Map), or both. Each method has 3 steps:
+This pipeline is meant to extract the dimension of resting state fMRI data representative of a functional network, given a template representing said network through independent component analysis (ICA). The method has 3 steps:
 
 1) wMCM Component Generation - Generate ICA components at varying degrees of dimension reduction.
 2) wMCM Creation - In case the network of interest has been split between components, combine all representative components into final map.
