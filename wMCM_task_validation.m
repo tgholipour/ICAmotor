@@ -1,26 +1,23 @@
-function wMCM_task_validation(fmriprepdir, thresholds, activation_thresh, templatepath, taskname, firstlevdir)
-clear;
-addpath('/nas/data/app/spm12');
-tic;
+function wIMM_task_validation(fmriprepdir, thresholds, activation_thresh, taskname, firstlevdir)
 subids = dir(fmriprepdir);
 subids = {subids.name};
-icaactsumvarnames={'SubjectID','actfile', 'componentfile', 'z', 'task','activation_thresh', 'activ_cutoff', 'mutual_info', 'dici', 'dice_coef', 'percent_act_in_networkmask'};
-icaacttable=table({'subjectID'},{'actfile'},{'componentfile'},0,{'task'}, 0, 0, 0, 0, 0, 0,'VariableNames', icaactsumvarnames);
+subids = subids(3:length(subids));
+icaactsumvarnames={'SubjectID','actfile', 'componentfile', 'z', 'task','activation_thresh', 'activ_cutoff', 'percent_act_in_networkmask'};
+icaacttable=table({'subjectID'},{'actfile'},{'componentfile'},0,{'task'}, 0, 0, 0,'VariableNames', icaactsumvarnames);
 tablei = 1;
-cd(fmriprepdir);
 for i = 1:length(subids)
     subid = char(subids(i));
     disp(subid)
-    component_filename = dir([subid '/restmelodicsmooth_*/' subid '_wMCM.nii']);
+    component_filename = dir([fmriprepdir subid '/restmelodicsmooth_*/' subid '_wIMM.nii']);
     if ~isempty(component_filename)
         component_filename = [component_filename.folder '/' component_filename.name];
+        templatepath = [fmriprepdir subid '/template/template_native_resample.nii'];
         templatemask = spm_read_vols(spm_vol(templatepath));
         templatemask = templatemask>0;
         totaltemplatemask = sum(templatemask(:));
         
         for actthresh = activation_thresh
             for zi = thresholds
-                
                 disp(taskname);
                 activationfile = dir([firstlevdir subid '/*' taskname '*/*/spmT_0001.nii']);
                 if ~isempty(activationfile)
@@ -55,15 +52,12 @@ for i = 1:length(subids)
                         icaacttable.sensitivity(tablei) = count;
                         
                         sigact = activation>1.65;
-                        sigcomp = smoothcomp>1.96;
                         
                         activation(~templatemask) = 0;
                         smoothcompz(~templatemask) = 0;
                         sigact(~templatemask) = 0;
-                        sigcomp(~templatemask) = 0;
                         
                         totalsigactmask = sum(sigact(:));
-                        totalsigcompmask = sum(sigcomp(:));
                         
                         if actthresh==0.05
                             actcutoff = 1.65;
@@ -79,10 +73,7 @@ for i = 1:length(subids)
                         intersect_activationz = smoothcompz & activation;
                         hitrate_activationz = sum(intersect_activationz(:))/sum(activation(:));
                         icaacttable.hitrate(tablei) = hitrate_activationz;
-                        
-                        icaacttable.actpropofmask(tablei) = sum(activation(:))/sum(templatemask(:));
-                        icaacttable.comppropofmask(tablei) = sum(smoothcompz(:))/sum(templatemask(:));
-                        
+                       
                         icaacttable.SubjectID{tablei,1} = subid;
                         icaacttable.task{tablei,1} =taskname;
                         icaacttable.actfile{tablei,1} = activationfile;
@@ -90,9 +81,7 @@ for i = 1:length(subids)
                         icaacttable.activation_thresh(tablei) = actthresh;
                         icaacttable.activ_cutoff(tablei) = actcutoff;
                         icaacttable.z(tablei) = zi;
-                        icaacttable.dici(tablei) = hr_far_activationz;
                         icaacttable.percent_act_in_networkmask(tablei) = totalsigactmask/totaltemplatemask*100;
-                        icaacttable.percent_comp_in_networkmask(tablei) = totalsigcompmask/totaltemplatemask*100;
                         tablei = tablei+1;
                     end
                 end
@@ -103,6 +92,5 @@ for i = 1:length(subids)
     
 end
 rmpath(genpath('/nas/data/app/spm12'));
-writetable(icaacttable,'wMCM_validation.csv','Delimiter',',');
-toc;
+writetable(icaacttable,'wIMM_validation.csv','Delimiter',',');
 end
