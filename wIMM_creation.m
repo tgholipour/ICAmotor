@@ -1,4 +1,4 @@
-function wMCM_creation(antspath, afnipath, fmriprepdir, templatepath, thresholds, numcomps)
+function wIMM_creation(antspath, afnipath, fmriprepdir, templatepath, thresholds, numcomps)
 inputsubs=dir(fmriprepdir);
 subs = {inputsubs.name};
 subs = subs(3:length(subs));
