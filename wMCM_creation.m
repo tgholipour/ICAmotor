@@ -1,41 +1,37 @@
 function wMCM_creation(antspath, afnipath, fmriprepdir, templatepath, thresholds, numcomps)
-clear;
-%%
-cd(fmriprepdir)
 inputsubs=dir(fmriprepdir);
 subs = {inputsubs.name};
-icasummaryvarnames={'SubjectID', 'NumofComponents'};
-icatable=table({'subjectID'},0, 'VariableNames', icasummaryvarnames);
-tablei = 1;
+subs = subs(3:length(subs));
 for subi = 1:length(subs)
     disp(char(subs(subi)))
     subid = char(subs(subi));
     tic;
-    
-    inputfilename = dir([[char(subs(subi)) '/func/'], '*_task-rest*_space-T1w_desc-preproc_bold.nii.gz']);
+    if ~isfolder([fmriprepdir subid '/template/'])
+        mkdir([fmriprepdir subid '/template/'])
+    end
+    inputfilename = dir([[fmriprepdir char(subs(subi)) '/func/'], '*_task-rest*_space-T1w_desc-preproc_bold.nii.gz']);
     
     if ~isempty(inputfilename)
-        nativetemplatepath = [char(subs(subi)) '/template/template_native.nii'];
-        if isfile([char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5'])
-            nativize_template_str = [antspath ' -i ' templatepath ' -t ' char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5 '  ' -r ' char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
+        nativetemplatepath = [fmriprepdir char(subs(subi)) '/template/template_native.nii'];
+        if isfile([fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5'])
+            nativize_template_str = [antspath ' -i ' templatepath ' -t ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5 '  ' -r ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
             if ~exist(nativetemplatepath, 'file')
                 system(nativize_template_str);
             end
-        elseif isfile([char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5'])
-            nativize_template_str = [antspath ' -i ' templatepath ' -t ' char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5 '  ' -r ' char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
+        elseif isfile([fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5'])
+            nativize_template_str = [antspath ' -i ' templatepath ' -t ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5 '  ' -r ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
             if ~exist(nativetemplatepath, 'file')
                 system(nativize_template_str);
             end
         end
-        templatedeob = [char(subs(subi)) '/template/template_native_deoblique.nii'];
-        templateresample = [char(subs(subi)) '/template/template_native_resample.nii'];
+        templatedeob = [fmriprepdir char(subs(subi)) '/template/template_native_deoblique.nii'];
+        templateresample = [fmriprepdir char(subs(subi)) '/template/template_native_resample.nii'];
         if ~isfile(templatedeob)
             system([afnipath '/3dWarp -deoblique -overwrite -prefix ' templatedeob ' ' nativetemplatepath]);
         end
         if ~isfile(templateresample)
-            system([afnipath '/3dresample -overwrite -master ' char(subs(subi)) '/restmelodicsmooth_auto/mean.nii.gz -prefix ' templateresample ' -input ' templatedeob]);
+            system([afnipath '/3dresample -overwrite -master ' fmriprepdir char(subs(subi)) '/restmelodicsmooth_auto/mean.nii.gz -prefix ' templateresample ' -input ' templatedeob]);
         end
-        %for perci = percs
         template = spm_read_vols(spm_vol(templateresample));
         template = template>0;
         
@@ -44,7 +40,7 @@ for subi = 1:length(subs)
         topdici_ind = 1;
         topdici_thresh = zeros(length(numcomps),length(thresholds));
         for numi = numcomps
-            outdir = [char(subs(subi)) '/restmelodicsmooth_' char(numi)];
+            outdir = [fmriprepdir char(subs(subi)) '/restmelodicsmooth_' char(numi)];
             if ~isfile([outdir '/melodic_IC.nii'])
                 gunzip([outdir '/melodic_IC.nii.gz']);
             end
@@ -128,7 +124,7 @@ for subi = 1:length(subs)
 
         ncoltopdicis = size(topdicis,2);
         for topi = 1:size(topdicis,1)
-            tncmelodic = spm_read_vols(spm_vol([subid '/restmelodicsmooth_' char(numcomps(topi)) '/melodic_IC.nii']));
+            tncmelodic = spm_read_vols(spm_vol([fmriprepdir subid '/restmelodicsmooth_' char(numcomps(topi)) '/melodic_IC.nii']));
             tnctopcomp = squeeze(tncmelodic(:,:,:,topdicis(topi,1)));
             [~, idx] = max(tnctopcomp(:));
             [r,c,p] = ind2sub(size(tnctopcomp), idx);
@@ -158,7 +154,6 @@ for subi = 1:length(subs)
         end
         nummelodic = spm_read_vols(spm_vol([outdir '/melodic_IC.nii']));
         dici_templatefinal=zeros(size(nummelodic,4),1);
-        %keep track of which components have peak value in mask
         for compi = 1:size(nummelodic,4)
             zind = 1;
             for zi = thresholds(1:length(thresholds)-1)
@@ -239,14 +234,12 @@ for subi = 1:length(subs)
                 
             end
         end
-        icatable.SubjectID{tablei} = subid;
-                icatable.NumofComponents(tablei) = finalnumcomps;
-                tablei = tablei+1;
+        
         if ~isfile([outdir '/mean.nii'])
             gunzip([outdir '/mean.nii.gz' ]);
         end
         compheader = spm_vol([outdir '/mean.nii']);
-        compheader.fname = [outdir '/' subid '_wMCM.nii'];
+        compheader.fname = [outdir '/' subid '_wIMM.nii'];
         compheader.private.dat.fname = compheader.fname;
         spm_write_vol(compheader, finalnetwork);
 
