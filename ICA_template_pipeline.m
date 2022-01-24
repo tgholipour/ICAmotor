@@ -7,11 +7,11 @@ if(nargin==0)
     afnipath='';
     antspath = '';
     smoothkernel = 2.49;
-    mMCM_maskpath = 'Templates/mMCM_mask.nii';
+    mMCM_maskpath = 'Templates/Neurosynth_motor_mask.nii';
     fmriprepdir='Data/';
     comp_sel_thresholds = [1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 1.96];
     numcomps = {'auto', '20', '30', '40', '50', '60'};
-    templatepath = 'Templates/sample_template.nii';
+    templatepath = 'Templates/HMAT_pre_post_central.nii';
     firstlevdir = 'FirstLevel/';
     comp_val_thresholds = [1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6];
     activ_val_thresholds = [ 0.05 0.01 0.005 0.001];
