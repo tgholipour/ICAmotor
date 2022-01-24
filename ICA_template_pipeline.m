@@ -1,7 +1,7 @@
-function ICA_template_pipeline(wMCM_flag, fslpath, afnipath, antspath, fmriprepdir, firstlevdir, templatepath, comp_sel_thresholds, numcomps, comp_val_thresholds, activ_val_thresholds, taskname, icasmoothkernel, mMCM_maskpath)
+function ICA_template_pipeline(wIMM_flag, fslpath, afnipath, antspath, fmriprepdir, firstlevdir, templatepath, comp_sel_thresholds, numcomps, comp_val_thresholds, activ_val_thresholds, taskname, icasmoothkernel)
 
 if(nargin==0)
-    wMCM_flag = 1;
+    wIMM_flag = 1;
     spmpath = '/nas/data/app/spm12/';
     fslpath = '/usr/local/software/FSL-6.0.3/fsl';
     afnipath= '/usr/local/software/afni-2021_01';
@@ -18,9 +18,9 @@ if(nargin==0)
 end
 
 addpath(spmpath);
- if wMCM_flag
-    wMCM_component_generation(fslpath, fmriprepdir, numcomps, icasmoothkernel);
-    wMCM_creation(antspath, afnipath, fmriprepdir, templatepath, comp_sel_thresholds, numcomps);
-    wMCM_task_validation(fmriprepdir, comp_val_thresholds, activ_val_thresholds, taskname, firstlevdir);
+ if wIMM_flag
+    wIMM_component_generation(fslpath, fmriprepdir, numcomps, icasmoothkernel);
+    wIMM_creation(antspath, afnipath, fmriprepdir, templatepath, comp_sel_thresholds, numcomps);
+    wIMM_task_validation(fmriprepdir, comp_val_thresholds, activ_val_thresholds, taskname, firstlevdir);
  end
  end
