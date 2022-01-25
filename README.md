@@ -2,9 +2,9 @@
 
 This pipeline is meant to extract the dimension of resting state fMRI data representative of a functional network, given a template representing said network through independent component analysis (ICA). The method has 3 steps:
 
-1) wMCM Component Generation - Generate ICA components at varying degrees of dimension reduction.
-2) wMCM Creation - In case the network of interest has been split between components, combine all representative components into final map.
-3) wMCM Task Validation - Calculating hit rate of top component and first level activation maps of task fMRI data, meant to elicit the same functional network.
+1) wIMM Component Generation - Generate ICA components at varying degrees of dimension reduction.
+2) wIMM Creation - In case the network of interest has been split between components, combine all representative components into final map.
+3) wIMM Task Validation - Calculating hit rate of top component and first level activation maps of task fMRI data, meant to elicit the same functional network.
 
 
 # Installation
