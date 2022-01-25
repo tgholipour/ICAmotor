@@ -1,4 +1,4 @@
-function ICA_template_pipeline(wIMM_flag, fslpath, afnipath, antspath, fmriprepdir, firstlevdir, templatepath, comp_sel_thresholds, numcomps, comp_val_thresholds, activ_val_thresholds, taskname, icasmoothkernel)
+function ICA_template_pipeline(fslpath, afnipath, antspath, fmriprepdir, firstlevdir, templatepath, comp_sel_thresholds, numcomps, comp_val_thresholds, activ_val_thresholds, taskname, icasmoothkernel)
 
 if(nargin==0)
     wIMM_flag = 1;
@@ -8,7 +8,7 @@ if(nargin==0)
     antspath = '/hct/fmriprep/install/bin/antsApplyTransforms';
     icasmoothkernel = 2.49;
     fmriprepdir='Data/';
-    comp_sel_thresholds = [1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 1.96];
+    comp_sel_thresholds = [1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6];
     numcomps = {'auto', '20', '30', '40', '50', '60'};
     templatepath = 'Templates/HMAT_pre_post_central.nii';
     firstlevdir = 'FirstLevel/';
@@ -18,9 +18,7 @@ if(nargin==0)
 end
 
 addpath(spmpath);
- if wIMM_flag
-    wIMM_component_generation(fslpath, fmriprepdir, numcomps, icasmoothkernel);
-    wIMM_creation(antspath, afnipath, fmriprepdir, templatepath, comp_sel_thresholds, numcomps);
-    wIMM_task_validation(fmriprepdir, comp_val_thresholds, activ_val_thresholds, taskname, firstlevdir);
- end
+wIMM_component_generation(fslpath, fmriprepdir, numcomps, icasmoothkernel);
+wIMM_creation(antspath, afnipath, fmriprepdir, templatepath, comp_sel_thresholds, numcomps);
+wIMM_task_validation(fmriprepdir, comp_val_thresholds, activ_val_thresholds, taskname, firstlevdir);
  end
