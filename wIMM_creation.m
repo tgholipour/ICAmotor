@@ -2,6 +2,7 @@ function wIMM_creation(antspath, afnipath, fmriprepdir, templatepath, thresholds
 inputsubs=dir(fmriprepdir);
 subs = {inputsubs.name};
 subs = subs(3:length(subs));
+thresholds = [thresholds 1.96];
 for subi = 1:length(subs)
     disp(char(subs(subi)))
     subid = char(subs(subi));
