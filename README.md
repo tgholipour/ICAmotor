@@ -10,11 +10,14 @@ This pipeline is meant to extract the dimension of resting state fMRI data repre
 # Installation
 Download and unzip repository. The pipeline can be run in parts, or can be run all together from the ICA_template_pipeline script. Default values have been provided, and can be changed to fit the environment in which it is being run. 
 
-SPM, AFNI, FSL, and antsApplyTransforms are required before running this pipeline and can be installed for free at the links below.
+SPM, AFNI, FSL, antsApplyTransforms, and MeanShiftCluster are required before running this pipeline and can be installed for free at the links below.
 https://www.fil.ion.ucl.ac.uk/spm/software/download/
 https://afni.nimh.nih.gov/download
 https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation
 https://sourceforge.net/projects/advants/files/
+https://www.mathworks.com/matlabcentral/fileexchange/10161-mean-shift-clustering
 
 
 Before running, preprocess anatomical and resting state fMRI data through fMRIPrep. If planning on utilizing validation aspect of pipeline, generate first-level activation T-map of task-fMRI data in SPM.
+
+The template provided is the Human Motor Area Template (HMAT) 
