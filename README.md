@@ -20,4 +20,6 @@ https://www.mathworks.com/matlabcentral/fileexchange/10161-mean-shift-clustering
 
 Before running, preprocess anatomical and resting state fMRI data through fMRIPrep. If planning on utilizing validation aspect of pipeline, generate first-level activation T-map of task-fMRI data in SPM.
 
-The template provided is the Human Motor Area Template (HMAT) 
+The template provided is the Human Motor Area Template (HMAT). 
+Mayka, M.A., Corcos, D.M., Leurgans, S.E., Vaillancourt, D.E., 2006. Three-dimensional locations and boundaries of motor and premotor cortices as defined by functional brain imaging: a meta-analysis. NeuroImage 31, 1453–74. https://doi.org/10.1016/j.neuroimage.2006.02.004![image](https://user-images.githubusercontent.com/88797743/151281577-be39f315-a329-4794-984f-bf070a003daa.png)
+
