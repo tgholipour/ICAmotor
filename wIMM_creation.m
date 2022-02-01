@@ -14,16 +14,9 @@ for subi = 1:length(subs)
     
     if ~isempty(inputfilename)
         nativetemplatepath = [fmriprepdir char(subs(subi)) '/template/template_native.nii'];
-        if isfile([fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5'])
-            nativize_template_str = [antspath ' -i ' templatepath ' -t ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5 '  ' -r ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
-            if ~exist(nativetemplatepath, 'file')
-                system(nativize_template_str);
-            end
-        elseif isfile([fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5'])
-            nativize_template_str = [antspath ' -i ' templatepath ' -t ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5 '  ' -r ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
-            if ~exist(nativetemplatepath, 'file')
-                system(nativize_template_str);
-            end
+        nativize_template_str = [antspath ' -i ' templatepath ' -t ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_from-MNI152NLin6Asym_to-T1w_mode-image_xfm.h5 '  ' -r ' fmriprepdir char(subs(subi)) '/anat/' char(subs(subi)) '_desc-preproc_T1w.nii.gz -o ' nativetemplatepath];
+        if ~exist(nativetemplatepath, 'file')
+            system(nativize_template_str);
         end
         templatedeob = [fmriprepdir char(subs(subi)) '/template/template_native_deoblique.nii'];
         templateresample = [fmriprepdir char(subs(subi)) '/template/template_native_resample.nii'];
