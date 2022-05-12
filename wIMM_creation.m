@@ -200,6 +200,11 @@ for subi = 1:length(subs)
                 end
             end
             if onevoxpeakcheck==1
+                compheader = spm_vol([outdir '/mean.nii']);
+                compheader.fname = [fmriprepdir subid '/' subid '_component_' num2str(maxclust(clustcompi)) '.nii'];
+                compheader.private.dat.fname = compheader.fname;
+                spm_write_vol(compheader, clustcomp);
+                
                 finalnumcomps = finalnumcomps+1;
                 
                 overlapclust = finalnetwork & clustcomp;
@@ -233,7 +238,7 @@ for subi = 1:length(subs)
             gunzip([outdir '/mean.nii.gz' ]);
         end
         compheader = spm_vol([outdir '/mean.nii']);
-        compheader.fname = [outdir '/' subid '_wIMM.nii'];
+        compheader.fname = [fmriprepdir subid '/' subid '_final_ICA_map.nii'];
         compheader.private.dat.fname = compheader.fname;
         spm_write_vol(compheader, finalnetwork);
 
