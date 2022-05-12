@@ -8,7 +8,7 @@ tablei = 1;
 for i = 1:length(subids)
     subid = char(subids(i));
     disp(subid)
-    component_filename = dir([fmriprepdir subid '/restmelodicsmooth_*/' subid '_wIMM.nii']);
+    component_filename = dir([fmriprepdir subid '/' subid '_final_ICA_map.nii']);
     if ~isempty(component_filename)
         component_filename = [component_filename.folder '/' component_filename.name];
         templatepath = [fmriprepdir subid '/template/template_native_resample.nii'];
