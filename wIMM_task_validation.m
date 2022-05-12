@@ -1,4 +1,4 @@
-function wIMM_task_validation(fmriprepdir, thresholds, activation_thresh, taskname, firstlevdir)
+function wIMM_task_validation(fmriprepdir, thresholds, activation_thresh, taskname, firstlevdir, afnipath)
 subids = dir(fmriprepdir);
 subids = {subids.name};
 subids = subids(3:length(subids));
@@ -21,13 +21,20 @@ for i = 1:length(subids)
                 disp(taskname);
                 activationfile = dir([firstlevdir subid '/*' taskname '*/*/spmT_0001.nii']);
                 if ~isempty(activationfile)
-                    activationfile = [activationfile.folder '/' activationfile.name];
+                    activationfolder = activationfile.folder;
+                    activationfile = [activationfolder '/' activationfile.name];
                     if isfile(activationfile)
                         disp(activationfile)
                         disp(actthresh)
                         disp(zi)
                         activation = spm_read_vols(spm_vol(activationfile));
                         smoothcomp = spm_read_vols(spm_vol(component_filename));
+                        if sum(size(activation)==size(smoothcomp))<3
+                            resampleactivationfile = [activationfolder '/resample_spmT_0001.nii'];
+                            resamplestr = [afnipath '/3dWarp -deoblique -gridset ' component_filename ' -overwrite -prefix ' resampleactivationfile ' ' activationfile];
+                            system(resamplestr);
+                            activation = spm_read_vols(spm_vol(resampleactivationfile));
+                        end
                         smoothcompz = smoothcomp>zi;
                         
                         templateact = activation;
@@ -43,7 +50,6 @@ for i = 1:length(subids)
                                 for z=zs
                                     if(smoothcompz(x,y,z)~=0)
                                         count=count+1;
-                                        
                                     end
                                     
                                 end
