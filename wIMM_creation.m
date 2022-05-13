@@ -201,7 +201,8 @@ for subi = 1:length(subs)
             end
             if onevoxpeakcheck==1
                 compheader = spm_vol([outdir '/mean.nii']);
-                compheader.fname = [fmriprepdir subid '/' subid '_component_' num2str(maxclust(clustcompi)) '.nii'];
+                outdirsplit = split(outdir, '_');
+                compheader.fname = [fmriprepdir subid '/' subid '_TNC_' char(outdirsplit(2)) '_component_' num2str(maxclust(clustcompi)) '.nii'];
                 compheader.private.dat.fname = compheader.fname;
                 spm_write_vol(compheader, clustcomp);
                 
