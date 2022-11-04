@@ -22,5 +22,10 @@ https://www.mathworks.com/matlabcentral/fileexchange/10161-mean-shift-clustering
 
 We suggest preprocessing anatomical and resting state fMRI data through fMRIPrep. If planning on utilizing validation aspect of pipeline (comparison to task activation results), generate first-level activation T-map of task-fMRI data. We used SPM for this part.
 
+To allow the MeanShiftCluster method to work on a 1D array, change line 47 from
+sqDistToAll = sum((repmat(myMean,1,numPts) - dataPts).^2)
+to
+sqDistToAll = sum((repmat(myMean,1,numPts) - dataPts).^2,1).
+
 The template usd for the motor mapping (wIMM) is provided, and is the precentral and post central gyri from the Human Motor Area Template (HMAT):
 Mayka, M.A., Corcos, D.M., Leurgans, S.E., Vaillancourt, D.E., 2006. Three-dimensional locations and boundaries of motor and premotor cortices as defined by functional brain imaging: a meta-analysis. NeuroImage 31, 1453–74. https://doi.org/10.1016/j.neuroimage.2006.02.004
