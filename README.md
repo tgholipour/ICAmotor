@@ -14,11 +14,11 @@ Download and unzip repository. The pipeline can be run in parts, or can be run a
 
 This is a Matlab pipeline.
 SPM, AFNI, FSL, antsApplyTransforms, and MeanShiftCluster are required before running this pipeline and can be installed for free at the links below.
-https://www.fil.ion.ucl.ac.uk/spm/software/download/
-https://afni.nimh.nih.gov/download
-https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation
-https://sourceforge.net/projects/advants/files/
-https://www.mathworks.com/matlabcentral/fileexchange/10161-mean-shift-clustering
+- https://www.fil.ion.ucl.ac.uk/spm/software/download/
+- https://afni.nimh.nih.gov/download
+- https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation
+- https://github.com/ANTsX/ANTs
+- https://www.mathworks.com/matlabcentral/fileexchange/10161-mean-shift-clustering
 
 We suggest preprocessing anatomical and resting state fMRI data through fMRIPrep. If planning on utilizing validation aspect of pipeline (comparison to task activation results), generate first-level activation T-map of task-fMRI data. We used SPM for this part.
 
