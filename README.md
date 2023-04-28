@@ -1,8 +1,10 @@
 # ICA motor
 This pipeline extracts the dimension of resting state fMRI data representative of a functional network through independent component analysis (ICA). The method uses independent component estimation, template matching and clustering of the results given a template representing target network.
 Here we used a motor template and named the resulting map "whole-brain ICA Motor Map" (wIMM). The method can potentially be used for other functional networks, such as language, to replace task-based mapping (ongoing study).
-Please cite our preprint of the method and results in children with epilepsy: Krishnamurthy et. al. medRxiv 2022 DOI: https://doi.org/10.1101/2022.02.04.22270184) 
-Found at: https://www.medrxiv.org/content/10.1101/2022.02.04.22270184v1
+
+Please cite for method and results in children with epilepsy:
+Krishnamurthy, M, You, X, Sepeta, LN, Matuska, E, Oluigbo, C, Berl, MM, et al. Resting-state functional MRI for motor cortex mapping in childhood-onset focal epilepsy. J Neuroimaging. 2022; 32: 1201– 1210. https://doi.org/10.1111/jon.13030
+Available at https://onlinelibrary.wiley.com/doi/10.1111/jon.13030
 
 The method has 3 steps:
 1) wIMM Component Generation - Generate ICA components at varying degrees of dimension reduction.
@@ -10,7 +12,7 @@ The method has 3 steps:
 3) wIMM Task Validation - Calculating hit rate of top component and first level activation maps of task fMRI data, meant to elicit the same functional network.
 
 # Installation
-Download and unzip repository. The pipeline can be run in parts, or can be run all together from the ICA_template_pipeline script. Default values have been provided, and can be changed to fit the environment in which it is being run. 
+Download and unzip repository. The pipeline can be run in parts, or can be run all together from the **ICA_template_pipeline script**. Default values have been provided, and can be changed to fit the environment in which it is being run. 
 
 This is a Matlab pipeline.
 SPM, AFNI, FSL, antsApplyTransforms, and MeanShiftCluster are required before running this pipeline and can be installed for free at the links below.
